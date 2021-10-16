@@ -1,5 +1,5 @@
 {
-  "name": "Wlatic HA Repo",
-  "url": "https://github.com/wlatic/hassio.addons",
-  "maintainer": "Wlatic"
+  "name": "Repo Fork",
+  "url": "https://github.com/jwsample/hassio.addon",
+  "maintainer": "jwsample"
 }
