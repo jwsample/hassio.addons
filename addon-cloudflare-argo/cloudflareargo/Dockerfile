@@ -7,16 +7,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 # hadolint ignore=DL3003
 ARG BUILD_ARCH=aarch64
-RUN \
- ARCH="${BUILD_ARCH}" \
- && if [[ "${BUILD_ARCH}" = "aarch64" ]]; then ARCH="arm64"; fi \
-    && if [[ "${BUILD_ARCH}" = "amd64" ]]; then ARCH="amd64"; fi \
-    && if [[ "${BUILD_ARCH}" = "armhf" ]]; then ARCH="arm"; fi \
-    && if [[ "${BUILD_ARCH}" = "armv7" ]]; then ARCH="arm"; fi \
-    && if [[ "${BUILD_ARCH}" = "i386" ]]; then ARCH="386"; fi 
 
 RUN apk add libc6-compat 
-
+ARG ARCH=arm64
 RUN if [[ "$ARCH" = "arm64" ]]; then mkdir /etc/cloudflared && curl -L -s -o /opt/cloudflared "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64" && chmod +x /opt/cloudflared; else mkdir /etc/cloudflared && curl -L -s "https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-${ARCH}.tgz" | tar xzf - -C /opt/ && chmod +x /opt/cloudflared;  fi 
 
 COPY rootfs /
